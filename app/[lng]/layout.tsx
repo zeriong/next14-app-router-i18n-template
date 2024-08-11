@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../../styles/globals.css";
 import {i18nConfig, Locale} from "@/libs/i18n";
 import getTranslation from "@/libs/i18n/utils/getTranslation";
+import PortalHeader from "@/components/layout/PortalHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,12 +26,13 @@ export default function LandingPageLayout({
   children, params
 }: Readonly<{
   children: React.ReactNode;
-  params: { lng: string };
+  params: { lng: Locale };
 }>) {
   return (
     <html lang={params.lng}>
       <body className={inter.className}>
         <main>
+          <PortalHeader params={params}/>
           {children}
         </main>
       </body>

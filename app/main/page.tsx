@@ -1,9 +1,11 @@
 import React from 'react';
+import getTranslation from "@/libs/i18n/utils/getTranslation";
 
-export default function Page() {
+export default async function Page() {
+    const t = await getTranslation("en");
     return (
         <div>
-            이곳은 고객 전용페이지입니다.
+            {t("main.content")}
         </div>
     );
 }

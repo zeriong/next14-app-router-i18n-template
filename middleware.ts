@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Locale, i18nConfig } from './libs/i18n';
 import {getMatchingLocale} from "@/libs/i18n/utils/getMatchingLocale";
+import {LOCALE_COOKIE} from "@/constants/common";
 
 export default function middleware(request: NextRequest) {
   // Internationalization.
@@ -13,12 +14,12 @@ export default function middleware(request: NextRequest) {
       request.nextUrl.pathname !== `/${locale}`
   );
 
-  // Locale not found in request url, redirect to matched locale url.
+  // request url에서 locale 부분을 찾지 못한 경우 리디렉션
   if (localeNotFound) {
-    // Get matching locale for user.
-    const newLocale: Locale = getMatchingLocale(request);
+    // 유저에게 적합한 locale 또는 쿠키에 지정되어있는 locale
+    const newLocale: Locale = request.cookies.get(LOCALE_COOKIE)?.value as Locale || getMatchingLocale(request);
 
-    // Return new url redirect and redirect user to correct locale url.
+    // 리디렉션 반환
     return NextResponse.redirect(
       new URL(`/${newLocale}/${request.nextUrl.pathname}`, request.url)
     );

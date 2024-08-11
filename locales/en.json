@@ -2,8 +2,14 @@
   "meta": {
     "title": "Create Next"
   },
+  "common": {
+    "localeSelectorTxt": "select language"
+  },
   "portal": {
     "title": "Hello world!",
     "content": "It implemented i18n without using a library."
+  },
+  "main": {
+    "content": "This is a customer-only page."
   }
 }

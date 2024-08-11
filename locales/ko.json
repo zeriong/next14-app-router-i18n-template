@@ -2,8 +2,14 @@
   "meta": {
     "title": "생성 넥스트"
   },
+  "common": {
+    "localeSelectorTxt": "언어 선택"
+  },
   "portal": {
     "title": "안녕 세계!",
     "content": "라이브러리를 사용하지 않고 i18n을 구현했습니다."
+  },
+  "main": {
+    "content": "이곳은 고객 전용페이지입니다."
   }
 }
