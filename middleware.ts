@@ -26,6 +26,6 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Matcher ignoring /_next/ and /api/
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // url 자동 리디렉션 변환을 제외할 대상을 괄호안에 삽입 (main을 넣어 해당 페이지로 이동 시 locale url 미생성)
+  matcher: ['/((?!api|.*\\..*|_next/static|_next/image|manifest.json|main|favicon.ico).*)'],
 };

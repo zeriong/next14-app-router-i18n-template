@@ -29,7 +29,11 @@ export default function LandingPageLayout({
 }>) {
   return (
     <html lang={params.lng}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main>
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
