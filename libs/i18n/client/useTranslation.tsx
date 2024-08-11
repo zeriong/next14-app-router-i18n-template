@@ -33,7 +33,7 @@ export const useTranslation = () => {
     // 쿠키 locale과 locale pathname이 다를 경우 리디렉션하는 함수
     const initRedirection = () => {
         const currentLocale = getCookie(LOCALE_COOKIE);
-        console.log("파람스 이거 마자?", currentLocale, pathname.split("/")[1]);
+
         if (currentLocale !== pathname.split("/")[1]) {
             router.push(redirectToLocale(currentLocale, pathname));
         }

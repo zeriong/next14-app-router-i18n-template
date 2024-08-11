@@ -19,11 +19,13 @@ export default function LocaleSelector({ message, isCsr }: Props) {
     const pathname = usePathname();
     const { setLocale } = useTranslationStore();
 
+    // 언어 변경 리스트 info
     const localeInfo = {
         en: { native: 'English', english: 'English' },
         ko: { native: '한국어', english: '한국어' },
     };
 
+    // locale쿠키와 전역상태 locale을 변경하는 함수
     const changeLocale = (locale: Locale) => {
         setCookie(LOCALE_COOKIE, locale);
         setLocale(locale);
