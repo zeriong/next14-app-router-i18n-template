@@ -2,11 +2,12 @@
 
 import {useState} from "react";
 import {usePathname} from "next/navigation";
-import {i18nConfig} from "@/libs/i18n";
+import {i18nConfig, Locale} from "@/libs/i18n";
 import Link from "next/link";
 import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
 import {LOCALE_COOKIE} from "@/constants/common";
 import {setCookie} from "@/utils/cookies";
+import {useTranslationStore} from "@/store/i18nStore";
 
 interface Props {
     message: string;
@@ -16,11 +17,17 @@ interface Props {
 export default function LocaleSelector({ message, isCsr }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const pathname = usePathname();
+    const { setLocale } = useTranslationStore();
 
     const localeInfo = {
         en: { native: 'English', english: 'English' },
         ko: { native: '한국어', english: '한국어' },
     };
+
+    const changeLocale = (locale: Locale) => {
+        setCookie(LOCALE_COOKIE, locale);
+        setLocale(locale);
+    }
 
     return (
         <>
@@ -43,7 +50,11 @@ export default function LocaleSelector({ message, isCsr }: Props) {
                             {i18nConfig.locales.map((locale, index) => {
                                 return (
                                     !isCsr ?
-                                        <Link key={index} href={redirectToLocale(locale, pathname)} onClick={() => setCookie(LOCALE_COOKIE, locale)}>
+                                        <Link
+                                            key={index}
+                                            href={redirectToLocale(locale, pathname)}
+                                            onClick={() => changeLocale(locale)}
+                                        >
                                             <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
                                                 <h2 className="text-md font-medium text-neutral-950">
                                                     {localeInfo[locale].native}
@@ -54,10 +65,14 @@ export default function LocaleSelector({ message, isCsr }: Props) {
                                             </li>
                                         </Link>
                                         :
-                                        <button type="button" key={index} onClick={() => {
-                                            setCookie(LOCALE_COOKIE, locale);
-                                            setIsOpen(false);
-                                        }}>
+                                        <button
+                                            key={index}
+                                            type="button"
+                                            onClick={() => {
+                                                changeLocale(locale)
+                                                setIsOpen(false);
+                                            }}
+                                        >
                                             <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
                                                 <h2 className="text-md font-medium text-neutral-950">
                                                     {localeInfo[locale].native}
