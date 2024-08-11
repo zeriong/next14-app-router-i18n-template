@@ -3,8 +3,8 @@ import {ObjectKeys} from "@/libs/i18n/utils/objectKeys";
 
 // 지정된 locale에 대한 번역 json 파일을 비동기적으로 실행시키는 기능 포함
 const translations = {
-  en: () => import('@/locales/en.json').then((module) => module.default),
-  ko: () => import('@/locales/ko.json').then((module) => module.default),
+  en: () => import('@/public/locales/en.json').then((module) => module.default),
+  ko: () => import('@/public/locales/ko.json').then((module) => module.default),
 };
 
 // 번역 객체 타입 정의

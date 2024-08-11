@@ -7,7 +7,8 @@
   },
   "portal": {
     "title": "Hello world!",
-    "content": "It implemented i18n without using a library."
+    "content": "It implemented i18n without using a library.",
+    "linkToMain": "Link to Main"
   },
   "main": {
     "content": "This is a customer-only page."

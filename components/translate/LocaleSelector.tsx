@@ -1,6 +1,5 @@
 "use client";
 
-import { cookies } from 'next/headers'
 import {useState} from "react";
 import {usePathname} from "next/navigation";
 import {i18nConfig} from "@/libs/i18n";
@@ -11,9 +10,10 @@ import {setCookie} from "@/utils/cookies";
 
 interface Props {
     message: string;
+    isCsr?: boolean;
 }
 
-export default function PortalLocaleSelector({ message }: Props) {
+export default function LocaleSelector({ message, isCsr }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const pathname = usePathname();
 
@@ -42,16 +42,31 @@ export default function PortalLocaleSelector({ message }: Props) {
                         <ul className="flex w-full flex-col divide-y divide-neutral-200">
                             {i18nConfig.locales.map((locale, index) => {
                                 return (
-                                    <Link key={index} href={redirectToLocale(locale, pathname)} onClick={() => setCookie(LOCALE_COOKIE, locale)}>
-                                        <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
-                                            <h2 className="text-md font-medium text-neutral-950">
-                                                {localeInfo[locale].native}
-                                            </h2>
-                                            <p className="text-xs text-neutral-600">
-                                                {localeInfo[locale].english}
-                                            </p>
-                                        </li>
-                                    </Link>
+                                    !isCsr ?
+                                        <Link key={index} href={redirectToLocale(locale, pathname)} onClick={() => setCookie(LOCALE_COOKIE, locale)}>
+                                            <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
+                                                <h2 className="text-md font-medium text-neutral-950">
+                                                    {localeInfo[locale].native}
+                                                </h2>
+                                                <p className="text-xs text-neutral-600">
+                                                    {localeInfo[locale].english}
+                                                </p>
+                                            </li>
+                                        </Link>
+                                        :
+                                        <button type="button" key={index} onClick={() => {
+                                            setCookie(LOCALE_COOKIE, locale);
+                                            setIsOpen(false);
+                                        }}>
+                                            <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
+                                                <h2 className="text-md font-medium text-neutral-950">
+                                                    {localeInfo[locale].native}
+                                                </h2>
+                                                <p className="text-xs text-neutral-600">
+                                                    {localeInfo[locale].english}
+                                                </p>
+                                            </li>
+                                        </button>
                                 );
                             })}
                         </ul>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Locale, i18nConfig } from './libs/i18n';
 import {getMatchingLocale} from "@/libs/i18n/utils/getMatchingLocale";
 import {LOCALE_COOKIE} from "@/constants/common";
+import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
 
 export default function middleware(request: NextRequest) {
   // Internationalization.

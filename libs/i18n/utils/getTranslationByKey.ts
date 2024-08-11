@@ -46,7 +46,7 @@ export default function getTranslationByKey(
   // 번역값을 획득
   const translationValue = getTranslationValue(keys, translation);
 
-  // 번역 값이 존재하지 않거나 문자열이 나닌경우, 매개변수로 전달받은 key를 반환
+  // 번역 값이 존재하지 않거나 문자열이 아닌경우, 매개변수로 전달받은 key를 반환
   if (!translationValue || typeof translationValue !== 'string') {
     return key;
   }

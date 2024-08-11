@@ -4,6 +4,10 @@ import "../../styles/globals.css";
 import {i18nConfig, Locale} from "@/libs/i18n";
 import getTranslation from "@/libs/i18n/utils/getTranslation";
 import PortalHeader from "@/components/layout/PortalHeader";
+import {cookies, headers} from "next/headers";
+import {LOCALE_COOKIE} from "@/constants/common";
+import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
+import {router} from "next/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +33,10 @@ export default function LandingPageLayout({
   params: { lng: Locale };
 }>) {
   return (
-    <html lang={params.lng}>
+    <html lang={cookies().get(LOCALE_COOKIE)?.value || params.lng}>
       <body className={inter.className}>
+        <PortalHeader params={params}/>
         <main>
-          <PortalHeader params={params}/>
           {children}
         </main>
       </body>
