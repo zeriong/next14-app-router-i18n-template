@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "title": "Create Next"
+  },
   "Hello world!": "Hello world!",
   "It implemented i18n without using a library.": "It implemented i18n without using a library."
 }
