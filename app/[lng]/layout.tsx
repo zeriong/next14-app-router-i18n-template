@@ -10,12 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function LandingPageLayout({
-  children,
+  children, params
 }: Readonly<{
   children: React.ReactNode;
+  params: { lng: string };
 }>) {
   return (
-    <html lang="en">
+    <html lang={params.lng}>
       <body className={inter.className}>{children}</body>
     </html>
   );
