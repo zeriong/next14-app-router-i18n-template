@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {i18nConfig, Locale} from "@/libs/i18n";
 import Link from "next/link";
 import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
@@ -17,6 +17,7 @@ interface Props {
 export default function LocaleSelector({ message, isCsr }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const pathname = usePathname();
+    const router = useRouter();
     const { setLocale } = useTranslationStore();
 
     // 언어 변경 리스트 info
@@ -71,7 +72,8 @@ export default function LocaleSelector({ message, isCsr }: Props) {
                                             key={index}
                                             type="button"
                                             onClick={() => {
-                                                changeLocale(locale)
+                                                changeLocale(locale);
+                                                router.refresh();
                                                 setIsOpen(false);
                                             }}
                                         >
