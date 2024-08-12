@@ -3,14 +3,13 @@
 import {useEffect, useState} from "react";
 import {getCookie} from "@/utils/cookies";
 import {LOCALE_COOKIE} from "@/constants/common";
-import loadTranslation from "@/libs/i18n/utils/loadTranslation";
+import loadTranslation, {Translation} from "@/libs/i18n/utils/loadTranslation";
 import {II18n, useTranslationStore} from "@/store/i18nStore";
 import {Locale} from "@/libs/i18n";
 import {usePathname, useRouter} from "next/navigation";
 import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
-import getTranslationByKey from "@/libs/i18n/utils/getTranslationByKey";
 
-type TTempFunc = (val: string) => string;
+type TTempFunc = (val: keyof Translation) => string;
 
 export const useTranslation = () => {
     const [t, setT] = useState<TTempFunc | undefined>();
@@ -25,7 +24,7 @@ export const useTranslation = () => {
         (async () => {
             const loadT = await loadTranslation(locale);
             setT(() => {
-                return (key: string) => getTranslationByKey(key, loadT)
+                return (key: keyof Translation) => loadT[key];
             });
         })()
     }

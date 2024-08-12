@@ -11,10 +11,10 @@ import {useTranslationStore} from "@/store/i18nStore";
 
 interface Props {
     message: string;
-    isCsr?: boolean;
+    isMain?: boolean;
 }
 
-export default function LocaleSelector({ message, isCsr }: Props) {
+export default function LocaleSelector({ message, isMain }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const pathname = usePathname();
     const router = useRouter();
@@ -29,7 +29,9 @@ export default function LocaleSelector({ message, isCsr }: Props) {
     // locale쿠키와 전역상태 locale을 변경하는 함수
     const changeLocale = (locale: Locale) => {
         setCookie(LOCALE_COOKIE, locale);
-        setLocale(locale);
+
+        // 메인이 아닌경우에 href과 겹치게 되면 제대로 실행되지 않음
+        if (isMain) setLocale(locale);
     }
 
     return (
@@ -52,7 +54,7 @@ export default function LocaleSelector({ message, isCsr }: Props) {
                         <ul className="flex w-full flex-col divide-y divide-neutral-200">
                             {i18nConfig.locales.map((locale, index) => {
                                 return (
-                                    !isCsr ?
+                                    !isMain ?
                                         <Link
                                             key={index}
                                             href={redirectToLocale(locale, pathname)}

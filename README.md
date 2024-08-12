@@ -8,7 +8,8 @@
 
 <code>
 const { t } = useTranslation();<br><br>
-{ t("common.headerTitle") }
+// write default text <br>
+{ t("Hi there~!") }
 
 </code>
 
@@ -21,7 +22,8 @@ const { t } = useTranslation();<br><br>
 <code>
 export default async function Page({ params }: { params: { lng: Locale } }) {<br>
     const t = await getTranslation(params.lng);<br><br>
-{ t("common.headerTitle") }
+// write default text <br>
+{ t("Hello World!") }
 
 </code>
 

@@ -14,7 +14,7 @@ export default function PortalHeader() {
     return (
         <header className="relative flex w-full h-fit bg-gray-200 items-center py-[12px] gap-4">
             <p className="text-[24px] font-bold">Header</p>
-            <PortalLocaleSelector message={t("common.localeSelectorTxt")}/>
+            <PortalLocaleSelector message={t("select language")}/>
         </header>
     );
 }

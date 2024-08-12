@@ -1,5 +1,4 @@
 import {i18nConfig, Locale} from "@/libs/i18n";
-import {ObjectKeys} from "@/libs/i18n/utils/objectKeys";
 
 // 지정된 locale에 대한 번역 json 파일을 비동기적으로 실행시키는 기능 포함
 const translations = {
@@ -11,9 +10,6 @@ const translations = {
 export type Translation = Awaited<
   ReturnType<(typeof translations)[typeof i18nConfig.defaultLocale]>
 >;
-
-// 번역 유형에 있는 모든 중첩 키에 대한 타입 정의
-export type TranslationObejct = (key: ObjectKeys<Translation>) => string;
 
 /**
  * 지정된 로케일을 기반으로 번역 json 파일을 비동기적으로 로드

@@ -10,11 +10,11 @@ export default async function Page({ params }: { params: { lng: Locale } }) {
     return (
           <div>
               <div>
-                  <h1>{t("portal.title")}</h1>
-                  <p>{t("portal.content")}</p>
+                  <h1>{t("Hello world!")}</h1>
+                  <p>{t("It implemented i18n without using a library.")}</p>
               </div>
               <Link href="/main" className="block p-[16px] bg-black text-white mt-[16px] ml-[16px] w-fit">
-                  {t("portal.linkToMain")}
+                  {t("Link to Main")}
               </Link>
           </div>
   );
