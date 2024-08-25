@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '../../styles/globals.css';
 import { cookies } from 'next/headers';
 import React from 'react';
 
 import PortalHeader from '@/components/layout/PortalHeader';
 import { LOCALE_COOKIE } from '@/constants/common';
 import { Locale, i18nConfig } from '@/libs/i18n';
+import { LocaleProvider } from '@/libs/i18n/client/LocaleProvider';
 import getTranslation from '@/libs/i18n/utils/getTranslation';
+import loadTranslation from '@/libs/i18n/utils/loadTranslation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,22 +30,27 @@ export async function generateMetadata({
 
   // 결과에 맞는 데이터 반환
   return {
-    title: translation('meta.title'),
+    title: translation('Create Next'),
   };
 }
 
-export default function LandingPageLayout({
+export default async function LandingPageLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
   params: { lng: Locale };
 }>) {
+  const serverLocale = (cookies().get(LOCALE_COOKIE)?.value || 'en') as Locale;
+  const localeJson = await loadTranslation(serverLocale);
+
   return (
     <html lang={cookies().get(LOCALE_COOKIE)?.value || params.lng}>
       <body className={inter.className}>
-        <PortalHeader />
-        <main>{children}</main>
+        <LocaleProvider value={{ serverLocale, localeJson }}>
+          <PortalHeader />
+          <main>{children}</main>
+        </LocaleProvider>
       </body>
     </html>
   );

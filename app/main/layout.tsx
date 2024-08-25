@@ -5,7 +5,9 @@ import React from 'react';
 import MainHeader from '@/components/layout/MainHeader';
 import { LOCALE_COOKIE } from '@/constants/common';
 import { Locale } from '@/libs/i18n';
+import { LocaleProvider } from '@/libs/i18n/client/LocaleProvider';
 import getTranslation from '@/libs/i18n/utils/getTranslation';
+import loadTranslation from '@/libs/i18n/utils/loadTranslation';
 
 export async function generateMetadata({
   params,
@@ -21,21 +23,26 @@ export async function generateMetadata({
 
   // 결과에 맞는 데이터 반환
   return {
-    title: translation('meta.title'),
+    title: translation('Create Next'),
     robots: 'noindex,nofollow',
   };
 }
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const serverLocale = (cookies().get(LOCALE_COOKIE)?.value || 'en') as Locale;
+  const localeJson = await loadTranslation(serverLocale);
+
   return (
-    <html>
+    <html lang={serverLocale}>
       <body>
-        <MainHeader />
-        <main>{children}</main>
+        <LocaleProvider value={{ serverLocale, localeJson }}>
+          <MainHeader />
+          <main>{children}</main>
+        </LocaleProvider>
       </body>
     </html>
   );
