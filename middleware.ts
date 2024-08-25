@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Locale, i18nConfig } from './libs/i18n';
 import {getMatchingLocale} from "@/libs/i18n/utils/getMatchingLocale";
 import {LOCALE_COOKIE} from "@/constants/common";
-import redirectToLocale from "@/libs/i18n/utils/redirectToLocale";
 
 export default function middleware(request: NextRequest) {
   // Internationalization.
@@ -20,10 +19,14 @@ export default function middleware(request: NextRequest) {
     // 유저에게 적합한 locale 또는 쿠키에 지정되어있는 locale
     const newLocale: Locale = request.cookies.get(LOCALE_COOKIE)?.value as Locale || getMatchingLocale(request);
 
-    // 리디렉션 반환
-    return NextResponse.redirect(
-      new URL(`/${newLocale}/${request.nextUrl.pathname}`, request.url)
-    );
+    // 리디렉션 설정
+    const res = NextResponse.redirect(new URL(`/${newLocale}/${request.nextUrl.pathname}`, request.url));
+
+    // 초기 언어 쿠키 설정
+    res.cookies.set(LOCALE_COOKIE, newLocale);
+
+    // 설정값 반환
+    return res;
   }
 }
 
