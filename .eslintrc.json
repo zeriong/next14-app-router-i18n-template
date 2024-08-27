@@ -41,6 +41,7 @@
       2,
       { "namedComponents": ["arrow-function", "function-declaration"] }
     ],
+    "react/require-default-props": "off",
     "sort-imports": [
       "error",
       {
