@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import React from 'react';
 
@@ -10,17 +9,11 @@ import { LocaleProvider } from '@/libs/i18n/client/LocaleProvider';
 import getTranslation from '@/libs/i18n/utils/getTranslation';
 import loadTranslation from '@/libs/i18n/utils/loadTranslation';
 
-const inter = Inter({ subsets: ['latin'] });
-
 export async function generateStaticParams() {
   return i18nConfig.locales.map((locale: Locale) => ({ locale }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { lng: Locale };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { lng: Locale } }): Promise<Metadata> {
   // locale쿠키의 값과 params가 다른경우에는 쿠키를 기반으로 적용
   // (main 페이지에서 변경된 사항을 알 수 있는 방법은 쿠키뿐이기 때문에 하이드레이션시켜주기 위함)
   const lng = (cookies().get(LOCALE_COOKIE)?.value || params.lng) as Locale;
@@ -46,7 +39,7 @@ export default async function LandingPageLayout({
 
   return (
     <html lang={cookies().get(LOCALE_COOKIE)?.value || params.lng}>
-      <body className={inter.className}>
+      <body>
         <LocaleProvider value={{ serverLocale, localeJson }}>
           <PortalHeader />
           <main>{children}</main>

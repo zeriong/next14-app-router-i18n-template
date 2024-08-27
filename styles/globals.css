@@ -16,8 +16,8 @@
   }
 }
 
-body {
-
+main {
+  padding-top: 72px;
 }
 
 @layer utilities {
