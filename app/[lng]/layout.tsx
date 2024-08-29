@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 import PortalHeader from '@/components/layout/PortalHeader';
@@ -8,6 +9,7 @@ import { Locale, i18nConfig } from '@/libs/i18n';
 import { LocaleProvider } from '@/libs/i18n/client/LocaleProvider';
 import getTranslation from '@/libs/i18n/utils/getTranslation';
 import loadTranslation from '@/libs/i18n/utils/loadTranslation';
+import redirectToLocale from '@/libs/i18n/utils/redirectToLocale';
 
 export async function generateStaticParams() {
   return i18nConfig.locales.map((locale: Locale) => ({ locale }));
@@ -29,16 +31,22 @@ export async function generateMetadata({ params }: { params: { lng: Locale } }):
 
 export default async function LandingPageLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lng: Locale };
 }>) {
   const serverLocale = (cookies().get(LOCALE_COOKIE)?.value || 'en') as Locale;
   const localeJson = await loadTranslation(serverLocale);
 
+  const headersList = headers();
+  const pathname = headersList.get('x-pathname') || '/';
+
+  // redirect 되는 경우 html 렌더링 자체를 막아야 redirection error 페이지를 거치지 않음
+  if (pathname?.split('/')[1] !== serverLocale) {
+    return redirect(redirectToLocale(serverLocale, pathname));
+  }
+
   return (
-    <html lang={cookies().get(LOCALE_COOKIE)?.value || params.lng}>
+    <html lang={serverLocale}>
       <body>
         <LocaleProvider value={{ serverLocale, localeJson }}>
           <PortalHeader />
