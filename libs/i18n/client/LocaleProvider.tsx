@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface IUseTranslation {
+export interface IUseTranslation {
   t: (content: KeyOfTranslation) => ValueOfTranslation;
 }
 

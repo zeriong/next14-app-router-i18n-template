@@ -20,8 +20,8 @@ const { t } = useTranslation();<br><br>
 ### If Server Component {
 
 <code>
-export default async function Page({ params }: { params: { lng: Locale } }) {<br>
-    const t = await getTranslation(params.lng);<br><br>
+export default async function Page() {<br>
+    const { t } = await getTranslation();<br><br>
 // write default text <br>
 { t("Hello World!") }
 

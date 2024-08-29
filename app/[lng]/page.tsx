@@ -1,13 +1,10 @@
-import { cookies } from 'next/headers';
 import React from 'react';
 
 import MockContentSection from '@/components/common/MockContentSection';
-import { LOCALE_COOKIE } from '@/constants/common';
-import { Locale } from '@/libs/i18n';
 import getTranslation from '@/libs/i18n/utils/getTranslation';
 
-export default async function Page({ params }: { params: { lng: Locale } }) {
-  const t = await getTranslation((cookies().get(LOCALE_COOKIE)?.value || params.lng) as Locale);
+export default async function Page() {
+  const { t } = await getTranslation();
   return (
     <div>
       <div>
