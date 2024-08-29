@@ -3,11 +3,7 @@
 import React, { createContext, useContext } from 'react';
 
 import { Locale } from '@/libs/i18n';
-import {
-  KeyOfTranslation,
-  Translation,
-  ValueOfTranslation,
-} from '@/libs/i18n/utils/loadTranslation';
+import { KeyOfTranslation, Translation, ValueOfTranslation } from '@/libs/i18n/utils/loadTranslation';
 
 interface IContext {
   serverLocale: Locale;
@@ -38,7 +34,6 @@ export const useTranslation = (): IUseTranslation => {
   if (!localeJson) {
     throw new Error('useLocale must be used within a LocaleProvider');
   }
-  const t: IUseTranslation['t'] = (content: KeyOfTranslation) =>
-    localeJson[content];
+  const t: IUseTranslation['t'] = (content: KeyOfTranslation) => localeJson[content];
   return { t };
 };
