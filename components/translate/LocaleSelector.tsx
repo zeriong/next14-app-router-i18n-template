@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 import { LOCALE_COOKIE } from '@/constants/common';
@@ -18,7 +18,6 @@ interface Props {
 export default function LocaleSelector({ message, isMain }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
-  const router = useRouter();
   const { setLocale } = useTranslationStore();
 
   // 언어 변경 리스트 info
@@ -56,36 +55,19 @@ export default function LocaleSelector({ message, isMain }: Props) {
               <h1 className="text-md font-medium">{message}</h1>
             </div>
             <ul className="flex w-full flex-col divide-y divide-neutral-200">
-              {i18nConfig.locales.map((locale) =>
-                !isMain ? (
-                  <Link
-                    key={locale}
-                    scroll={false} // 언어 변경 시 스크롤을 최상단으로 초기화 시키지 않으므로 ux 향상
-                    href={redirectToLocale(locale, pathname)}
-                    onClick={() => changeLocale(locale)}
-                  >
-                    <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
-                      <h2 className="text-md font-medium text-neutral-950">{localeInfo[locale].native}</h2>
-                      <p className="text-xs text-neutral-600">{localeInfo[locale].english}</p>
-                    </li>
-                  </Link>
-                ) : (
-                  <button
-                    key={locale}
-                    type="button"
-                    onClick={() => {
-                      changeLocale(locale);
-                      router.refresh();
-                      setIsOpen(false);
-                    }}
-                  >
-                    <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
-                      <h2 className="text-md font-medium text-neutral-950">{localeInfo[locale].native}</h2>
-                      <p className="text-xs text-neutral-600">{localeInfo[locale].english}</p>
-                    </li>
-                  </button>
-                ),
-              )}
+              {i18nConfig.locales.map((locale) => (
+                <Link
+                  key={locale}
+                  scroll={false} // 언어 변경 시 스크롤을 최상단으로 초기화 시키지 않으므로 ux 향상
+                  href={redirectToLocale(locale, pathname)}
+                  onClick={() => changeLocale(locale)}
+                >
+                  <li className="flex w-full flex-col items-start justify-center px-3 py-1 hover:bg-neutral-100">
+                    <h2 className="text-md font-medium text-neutral-950">{localeInfo[locale].native}</h2>
+                    <p className="text-xs text-neutral-600">{localeInfo[locale].english}</p>
+                  </li>
+                </Link>
+              ))}
             </ul>
           </div>
         </div>

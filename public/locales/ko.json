@@ -4,5 +4,6 @@
   "Hello world!": "안녕 세계!",
   "It implemented i18n without using a library.": "라이브러리를 사용하지 않고 i18n을 구현했습니다.",
   "Link to Main": "메인으로",
-  "This is a customer-only page.": "이곳은 고객 전용페이지입니다."
+  "This is a customer-only page.": "이곳은 고객 전용페이지입니다.",
+  "Header": "헤더"
 }
