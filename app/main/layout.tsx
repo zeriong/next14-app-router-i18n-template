@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
+  console.log('메인 레이아웃 쿠키체크: ', cookies().get(LOCALE_COOKIE)?.value);
   const serverLocale = (cookies().get(LOCALE_COOKIE)?.value || 'en') as Locale;
   const localeJson = await loadTranslation(serverLocale);
 

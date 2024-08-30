@@ -26,6 +26,7 @@ export default async function LandingPageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log('포탈 레이아웃 쿠키체크: ', cookies().get(LOCALE_COOKIE)?.value);
   const serverLocale = (cookies().get(LOCALE_COOKIE)?.value || 'en') as Locale;
   const localeJson = await loadTranslation(serverLocale);
 
